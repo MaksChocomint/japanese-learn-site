@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+dialog:-internal-dialog-in-top-layer::backdrop {
+  position: fixed;
+  inset: 0px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+input {
+  outline: none;
+}
+
+/* Общие стили для скроллбара */
+::-webkit-scrollbar {
+  width: 4px; /* Толщина ползунка */
+}
+::-webkit-scrollbar-track {
+  background: #1f2937; /* Цвет заднего фона */
+}
+::-webkit-scrollbar-thumb {
+  background: #dc2626; /* Цвет ползунка */
+  border-radius: 2px; /* Скругление углов */
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b91c1c; /* Цвет ползунка при наведении */
+}

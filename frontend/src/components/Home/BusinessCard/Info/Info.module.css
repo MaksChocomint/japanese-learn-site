@@ -1,0 +1,14 @@
+.gradient_dark_red {
+  background-image: linear-gradient(
+    180deg,
+    rgb(44, 21, 29) 0%,
+    rgb(122, 21, 37) 100%
+  );
+
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  font-weight: 700;
+  font-size: 30px;
+}
