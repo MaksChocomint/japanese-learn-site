@@ -11,6 +11,7 @@ const config: Config = {
       backgroundImage: {
         "dark-gradient": "url('/background.jpg')",
         header: "url('/header.png')",
+        flowers: "url('/flowers.png')",
         "header-bottom": "url('/header-bottom.png')",
         "business-card": "url('/business-card-background.png')",
         avatar: "url('/avatar.jpg')",

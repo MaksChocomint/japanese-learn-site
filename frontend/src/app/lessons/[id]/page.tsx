@@ -2,21 +2,17 @@
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import axios from "axios";
-import Image from "next/image";
+import Video from "next-video";
+import Container from "@/components/Home/Container";
+import { Lesson } from "@/components/Home/VideoSection/VideoGrid";
 
 const Lesson = () => {
-  interface Lesson {
-    id: number;
-    text: string;
-    imageUrl: string;
-    videoUrl: string;
-  }
-
   const pathname = usePathname();
   const id = Number(pathname.split("/").slice(-1)[0]);
 
   const [lesson, setLesson] = useState<Lesson>({
     id: id,
+    title: "",
     text: "",
     imageUrl: "",
     videoUrl: "",
@@ -36,18 +32,19 @@ const Lesson = () => {
 
   useEffect(() => {
     fetchData();
-  }, [lesson]);
+  }, []);
+
   return (
-    <div className="bg-dark-gradient bg-top bg-cover bg-no-repeat w-full min-h-screen]">
-      <div className="w-full bg-header bg-right bg-contain bg-no-repeat text-white">
-        <Image
-          src={lesson.imageUrl}
-          alt="background image"
-          width={400}
-          height={200}
-        />
-        <div>{lesson.videoUrl}</div>
-        <div>{lesson.text}</div>
+    <div className="bg-dark-red-gradient-2 bg-top bg-cover bg-no-repeat w-full min-h-screen">
+      <div className="w-full text-white relative">
+        <Container styles={"flex flex-col gap-10"}>
+          <h1 className="text-center text-3xl font-bold  mt-10">
+            {lesson.title}
+          </h1>
+          <div className="absolute top-0 right-0 bg-flowers bg-contain bg-right bg-no-repeat w-96 h-96"></div>
+          <Video src={lesson.videoUrl} />
+          <div className="text-lg">{lesson.text}</div>
+        </Container>
       </div>
     </div>
   );

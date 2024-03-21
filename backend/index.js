@@ -140,7 +140,6 @@ app.post(
   ]),
   async (req, res) => {
     try {
-      console.log(req.files, req.body.text);
       const result = await uploadForm(req, res);
       res.status(201).json(result);
     } catch (error) {
@@ -268,6 +267,7 @@ async function uploadForm(req, res) {
     // Create lesson entry in the database
     const lesson = await prisma.lesson.create({
       data: {
+        title: req.body.title,
         text: req.body.text,
         imageUrl: imageCloudFile ? imageCloudFile.secure_url : undefined,
         videoUrl: videoCloudFile ? videoCloudFile.secure_url : undefined,

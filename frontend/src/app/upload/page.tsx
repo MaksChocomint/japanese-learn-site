@@ -5,9 +5,14 @@ import { useDropzone } from "react-dropzone";
 
 const Upload: React.FC = () => {
   const [text, setText] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
 
-  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
 
@@ -20,6 +25,7 @@ const Upload: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append("title", title);
     formData.append("text", text);
 
     // Separate image and video files
@@ -47,6 +53,7 @@ const Upload: React.FC = () => {
         }
       );
       console.log("Урок создан:", response.data);
+      setTitle("");
       setText("");
       setFiles([]);
     } catch (error) {
@@ -55,37 +62,36 @@ const Upload: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-xs mx-auto">
+    <div className="mx-auto flex justify-center items-center bg-dark-red-gradient-2 bg-top bg-cover bg-no-repeat w-full min-h-screen">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="text-white w-1/2 bg-zinc-800 shadow-md rounded px-8 pt-6 pb-8 mb-4"
       >
         <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="text"
-          >
-            Текст:
-          </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow border-gray-400 appearance-none bg-zinc-700 border rounded w-full py-2 px-3 leading-tight focus:outline-none"
+            placeholder="Название урока"
+            value={title}
+            onChange={handleTitleChange}
+          />
+          <textarea
+            className="mt-4 shadow border-gray-400 appearance-none resize-none h-72 bg-zinc-700 border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
             id="text"
-            type="text"
-            placeholder="Введите текст"
+            placeholder="Текст урока..."
             value={text}
             onChange={handleTextChange}
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-4 cursor-pointer">
           <div
             {...getRootProps()}
-            className={`border-dashed border-2 rounded ${
-              isDragActive ? "border-blue-500" : "border-gray-400"
-            } p-4 text-center`}
+            className={`border-dashed border-2 rounded" ${
+              isDragActive ? "border-red-600" : "border-gray-400"
+            } p-8 text-center`}
           >
             <input {...getInputProps()} />
             {isDragActive ? (
-              <p className="text-blue-500">Отпустите файлы для загрузки</p>
+              <p className="text-red-600">Отпустите файлы для загрузки</p>
             ) : (
               <p>Перетащите сюда файлы или кликните для выбора</p>
             )}
@@ -93,20 +99,20 @@ const Upload: React.FC = () => {
         </div>
         <div className="mb-4">
           {files.map((file, index) => (
-            <div key={index} className="text-gray-700">
-              {file.name}
-            </div>
+            <div key={index}>{file.name}</div>
           ))}
         </div>
         <div className="flex items-center justify-center">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
-            Отправить
+            Загрузить урок
           </button>
         </div>
       </form>
+      <div className="absolute top-0 right-0 bg-flowers bg-contain bg-right bg-no-repeat w-96 h-96"></div>
+      <div className="absolute bottom-0 left-0 bg-flowers bg-contain rotate-180 bg-left bg-no-repeat w-96 h-96"></div>
     </div>
   );
 };
