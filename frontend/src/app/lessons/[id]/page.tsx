@@ -41,9 +41,11 @@ const Lesson = () => {
           <h1 className="text-center text-3xl font-bold  mt-10">
             {lesson.title}
           </h1>
-          <div className="absolute top-0 right-0 bg-flowers bg-contain bg-right bg-no-repeat w-96 h-96"></div>
+          <div className="fixed -translate-y-1/2 top-1/2 right-0 bg-flowers bg-contain bg-right bg-no-repeat w-96 h-96"></div>
+          <div className="fixed -translate-y-1/2 top-1/2 left-0 bg-flowers rotate-180 bg-contain bg-right bg-no-repeat w-96 h-96"></div>
+
           <Video src={lesson.videoUrl} />
-          <div className="text-lg">{lesson.text}</div>
+          <div className="text-lg relative z-[100]">{lesson.text}</div>
         </Container>
       </div>
     </div>
