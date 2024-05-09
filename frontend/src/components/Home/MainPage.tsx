@@ -8,7 +8,7 @@ import ChatBot from "../ChatBot/ChatBot";
 
 const MainPage = () => {
   return (
-    <div className="bg-dark-gradient bg-top bg-cover bg-no-repeat w-full h-[3300px] ">
+    <div className="bg-dark-gradient bg-top bg-cover bg-no-repeat w-full h-full ">
       <Header />
       <JoinForm />
       <VideoSection />

@@ -4,6 +4,7 @@ const os = require("os");
 const { v4: uuidv4 } = require("uuid");
 const cloudinary = require("cloudinary").v2;
 const multer = require("multer");
+const auth = require("./auth");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -23,6 +24,7 @@ const { PrismaClient } = require("@prisma/client");
 const axios = require("axios");
 
 const prisma = new PrismaClient();
+
 const app = express();
 
 //json
@@ -36,8 +38,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/api/v1/auth", auth);
+
 // Add a new route to handle AI requests
-app.post("/ai", async (req, res) => {
+app.post("/api/v1/ai", async (req, res) => {
   try {
     // Get the userPrompt from the request body
     const userPrompt = req.body.userPrompt;
@@ -87,7 +91,7 @@ app.post("/ai", async (req, res) => {
 });
 
 //test api
-app.get("/test", (req, res) => {
+app.get("/api/v1/test", (req, res) => {
   try {
     res.status(200).json({ message: "API is working" });
   } catch (error) {
@@ -96,7 +100,7 @@ app.get("/test", (req, res) => {
 });
 
 //get contacts
-app.get("/contacts", async (req, res) => {
+app.get("/api/v1/contacts", async (req, res) => {
   try {
     const contacts = await prisma.contact.findMany();
     res.status(200).json(contacts);
@@ -106,7 +110,7 @@ app.get("/contacts", async (req, res) => {
 });
 
 //create contact
-app.post("/contacts", async (req, res) => {
+app.post("/api/v1/contacts", async (req, res) => {
   try {
     const contact = await prisma.contact.create({
       data: {
@@ -122,7 +126,7 @@ app.post("/contacts", async (req, res) => {
 });
 
 //get lessons
-app.get("/lessons", async (req, res) => {
+app.get("/api/v1/lessons", async (req, res) => {
   try {
     const lessons = await prisma.lesson.findMany();
     res.status(200).json(lessons);
@@ -131,9 +135,25 @@ app.get("/lessons", async (req, res) => {
   }
 });
 
+//get 4 lessons
+app.get("/api/v1/lessons", async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1; // Получаем номер страницы из запроса
+    const perPage = 4; // Количество элементов на странице
+
+    const lessons = await prisma.lesson.findMany({
+      skip: (page - 1) * perPage,
+      take: perPage,
+    });
+
+    res.status(200).json(lessons);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 //create lesson
 app.post(
-  "/lessons",
+  "/api/v1/lessons",
   upload.fields([
     { name: "image", maxCount: 1 },
     { name: "video", maxCount: 1 },
@@ -149,7 +169,7 @@ app.post(
 );
 
 //get lesson by id
-app.get("/lessons/:id", async (req, res) => {
+app.get("/api/v1/lessons/:id", async (req, res) => {
   const lessonId = parseInt(req.params.id);
 
   try {
@@ -284,3 +304,5 @@ async function uploadForm(req, res) {
 //start server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+exports.prisma = { prisma };

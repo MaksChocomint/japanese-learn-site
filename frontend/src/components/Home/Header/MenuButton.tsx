@@ -66,12 +66,15 @@ const MenuButton: React.FC = () => {
               style={style}
               className="absolute top-10 right-0 bg-white rounded-md px-2 py-1 shadow"
             >
-              <ul className="divide-y divide-red-900 text-center">
-                <li className="cursor-pointer" onClick={handleLoginClick}>
+              <ul className="divide-y divide-red-900 text-center select-none">
+                <li
+                  className="cursor-pointer select-none"
+                  onClick={handleLoginClick}
+                >
                   Вход
                 </li>
                 <li
-                  className="cursor-pointer"
+                  className="cursor-pointer select-none"
                   onClick={handleRegistrationClick}
                 >
                   Регистрация

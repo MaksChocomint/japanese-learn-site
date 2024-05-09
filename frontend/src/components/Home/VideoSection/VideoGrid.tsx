@@ -17,7 +17,7 @@ const VideoGrid = () => {
   const [lessons, setLessons] = useState<Array<Lesson>>([]);
   const router = useRouter();
 
-  const handleCardClick = (id) => {
+  const handleCardClick = (id: number) => {
     router.push(`lessons/${id}`);
   };
 
@@ -38,7 +38,7 @@ const VideoGrid = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-2 gap-8 w-full">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center w-full">
       {lessons.map((lesson) => (
         <div
           key={lesson.id}
@@ -48,20 +48,18 @@ const VideoGrid = () => {
           <div className="text-white">
             {"Урок " + lesson.id + " : " + lesson.title}
           </div>
-          <div className="w-full h-64 relative flex flex-col gap-1">
+          <div className="w-full relative" style={{ paddingBottom: "56.25%" }}>
             <Image
               key={lesson.id}
               alt="lesson-preview"
               src={lesson.imageUrl}
               layout="fill"
+              objectFit="cover"
               className="rounded-lg"
             />
           </div>
         </div>
       ))}
-      <div className="w-full bg-red-300 h-64"></div>
-      <div className="w-full bg-red-300 h-64"></div>
-      <div className="w-full bg-red-300 h-64"></div>
     </div>
   );
 };

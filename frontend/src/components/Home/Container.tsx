@@ -11,5 +11,9 @@ export default function Container({
   children: React.ReactNode;
 }> &
   Props) {
-  return <div className={"px-60 py-4 " + styles}>{children}</div>;
+  return (
+    <div className={"lg:px-60 md:px-40 sm:px-20 py-4 " + styles}>
+      {children}
+    </div>
+  );
 }

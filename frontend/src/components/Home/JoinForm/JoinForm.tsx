@@ -27,7 +27,9 @@ const JoinForm = () => {
     <div ref={ref} className="mt-6 flex items-center justify-center w-full">
       <animated.div style={fadeIn}>
         <Container
-          styles={"flex flex-col justify-center items-center gap-4 w-[1100px]"}
+          styles={
+            "flex flex-col justify-center items-center gap-4 max-w-[1100px]"
+          }
         >
           <Greetings />
           <Info />

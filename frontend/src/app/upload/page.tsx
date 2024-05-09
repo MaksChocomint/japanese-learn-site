@@ -7,6 +7,7 @@ const Upload: React.FC = () => {
   const [text, setText] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
